@@ -1,6 +1,6 @@
 # MIS Organization
 
-is a web based management information system for an organization.
+Is a web based management information system app for managing an organization.
 
 ## Main Features
 
@@ -15,8 +15,8 @@ Manage:
 
 ## Tech
 
-- Laravel (https://laravel.com)
-- Material Dashboard (https://github.com/laravel-frontend-presets/material-dashboard)
+- Laravel v8.x (https://laravel.com/docs/8.x)
+- Bootstrap v5.2 (https://getbootstrap.com/docs/5.2/getting-started/introduction/)
 
 ## Deployment
 
@@ -25,6 +25,8 @@ Manage:
 3. run `composer update` on terminal.
 4. run `artisan generate:key` on terminal.
 5. run `artisan migrate` on terminal.
+6. run `artisan serve` on terminal.
+7. open browser then go to `[domain]/initialize-app` for initializing this app.
 
 ## Contributing
 
@@ -44,6 +46,4 @@ The code is released under the MIT license.
 
 ## Contact
 
-Email - [zainadam.id@gmail.com](mailto:zainadam.id@gmail.com?subject=[GitHub]%20EigenvectorCentralityPHP)
-
-Twitter - [@sensasi_DELIGHT](https://twitter.com/sensasi_DELIGHT)
+Email - [pemrogrammer@gmail.com](mailto:pemrogrammer@gmail.com?subject=[GitHub]%20Organization%20MIS)
