@@ -22,7 +22,7 @@ Manage:
 
 1. Clone this repository.
 2. Create `.env` file based on `.env.example` file.
-3. run `composer update` on terminal.
+3. run `composer install` on terminal.
 4. run `artisan generate:key` on terminal.
 5. run `artisan migrate` on terminal.
 6. run `artisan serve` on terminal.
