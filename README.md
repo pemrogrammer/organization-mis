@@ -7,7 +7,7 @@ Is a web based management information system app for managing an organization.
 Manage:
 
 - Member
-- Promotion
+- Recruitments
 - Accounting
 - Presences
 - in-out letters
@@ -15,18 +15,18 @@ Manage:
 
 ## Tech
 
-- Laravel v8.x (https://laravel.com/docs/8.x)
-- Bootstrap v5.2 (https://getbootstrap.com/docs/5.2/getting-started/introduction/)
+- Laravel v8.x ([documentation](https://laravel.com/docs/8.x))
+- Bootstrap v5.2 ([documentation](https://getbootstrap.com/docs/5.2/getting-started/introduction/))
 
 ## Deployment
 
 1. Clone this repository.
-2. Create `.env` file based on `.env.example` file.
+2. Create `.env` file based on `.env.example` file. (create a new database if it's nessesary)
 3. run `composer install` on terminal.
-4. run `artisan key:generate` on terminal.
-5. run `artisan migrate` on terminal.
-6. run `artisan serve` on terminal.
-7. open browser then go to `[domain]/initialize-app` for initializing this app.
+4. run `php artisan key:generate` on terminal.
+5. run `php artisan migrate` on terminal.
+6. run `php artisan serve` on terminal.
+7. open browser then go to `[domain]/initialize-app` (example: `http://localhost:8000/initialize-app`) for initializing this app.
 
 ## Contributing
 
