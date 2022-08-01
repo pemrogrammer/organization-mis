@@ -1,4 +1,4 @@
-# MIS Organization
+# Organization MIS
 
 Is a web based management information system app for managing an organization.
 
