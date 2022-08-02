@@ -6,9 +6,22 @@
             
             if ($user->is_admin) {
                 $menus = App\Models\Menu::all();
-                $groupMenus = $menus->groupBy('group');
+            } else {
+                $user = App\Models\User::with(['roles.menus', 'menus'])->find($user->id);
+                $menus = $user->menus;
+                
+                foreach ($user->roles as $role) {
+                  $menus = $menus->union($role->menus);
+                }
+
+            
+                $menus = $menus->unique(function ($item) {
+                    return $item['id'];
+                });
+
             }
             
+            $groupMenus = $menus->groupBy('group');
         @endphp
         @foreach ($groupMenus as $groupName => $menus)
             <ul class="nav flex-column">

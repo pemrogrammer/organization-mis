@@ -42,7 +42,7 @@ class CreateMenusTable extends Migration
         "bi" => "person-plus"
       ]
     ]);
-    
+
     DB::table('menus')->insert([
       [
         "name" => "Surat",
@@ -58,22 +58,22 @@ class CreateMenusTable extends Migration
         "name" => "Pengguna",
         "path" => "users",
         "bi" => "people",
-        "group" => "Administrator"
+        "group" => "Sistem"
       ], [
         "name" => "Menu",
         "path" => "menus",
         "bi" => "view-list",
-        "group" => "Administrator"
+        "group" => "Sistem"
       ], [
-        "name" => "Jabatan",
-        "path" => "positions",
+        "name" => "Peran",
+        "path" => "roles",
         "bi" => "bookmark-star",
-        "group" => "Administrator"
+        "group" => "Sistem"
       ], [
         "name" => "Kontak",
         "path" => "contacts",
         "bi" => "link-45deg",
-        "group" => "Administrator"
+        "group" => "Sistem"
       ]
     ]);
   }

@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InitializeAppController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('initialize-app', [InitializeAppController::class, 'index']);
 Route::get('initialize-app/check', [InitializeAppController::class, 'check'])->name('initialize-app.check');
 
-// Route::middleware('guest')->group(function () {
+Route::middleware('guest')->group(function () {
   Route::controller(InitializeAppController::class)
     ->prefix('initialize-app')
     ->name('initialize-app.')
@@ -43,7 +44,7 @@ Route::get('initialize-app/check', [InitializeAppController::class, 'check'])->n
       Route::get('oauth/google', 'googleOauth')->name('oauth.google');
       Route::get('oauth/google/redirect', 'handleGoogleOauth')->name('oauth.google.callback');
     });
-// });
+});
 
 Route::middleware('auth')->group(function () {
 
@@ -51,9 +52,14 @@ Route::middleware('auth')->group(function () {
 
   Route::post('logout', [LogoutController::class, 'logout'])->name('logout');
 
-  Route::controller(InitializeAppController::class)
-    ->prefix('initialize-app')
-    ->name('initialize-app.')
-    ->group(function () {
-    });
+  // Route::controller(InitializeAppController::class)
+  //   ->prefix('initialize-app')
+  //   ->name('initialize-app.')
+  //   ->group(function () {
+  //   });
+
+  Route::resource('users', UserController::class);
+  Route::post('users/roles/store', [UserController::class, 'roleStore'])->name('users.roleStore');
+  Route::post('users/roles', [UserController::class, 'roleDestroy'])->name('users.roleDestroy');
+
 });

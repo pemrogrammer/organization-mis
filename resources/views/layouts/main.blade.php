@@ -65,14 +65,31 @@
             white-space: nowrap;
             -webkit-overflow-scrolling: touch;
         }
+
+        .badge button {
+            color: inherit;
+            border: 0px;
+            padding: .5px 3px;
+            margin-left: .1em;
+        }
+
+        .badge button:hover {
+            color: initial;
+            background-color: white;
+        }
+
+        .badge {
+            font-size: 1em;
+            padding-left: 1em;
+        }
     </style>
 
 
     <!-- Custom styles for this template -->
     <style>
-        body {
+        /* body {
             font-size: .875rem;
-        }
+        } */
 
         .feather {
             width: 16px;
@@ -199,84 +216,19 @@
         <div class="row">
             @include('layouts.components.sidebar')
 
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pb-5">
                 @yield('main')
             </main>
         </div>
     </div>
 
-
-    {{-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
-        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous">
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
-        integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous">
-    </script> --}}
-
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
-        integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
-        integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
     </script>
 
     <script>
-        /* globals Chart:false, feather:false */
-
-        (() => {
-            'use strict'
-
-            feather.replace({
-                'aria-hidden': 'true'
-            })
-
-            // Graphs
-            const ctx = document.getElementById('myChart')
-            // eslint-disable-next-line no-unused-vars
-            const myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: [
-                        'Sunday',
-                        'Monday',
-                        'Tuesday',
-                        'Wednesday',
-                        'Thursday',
-                        'Friday',
-                        'Saturday'
-                    ],
-                    datasets: [{
-                        data: [
-                            15339,
-                            21345,
-                            18483,
-                            24003,
-                            23489,
-                            24092,
-                            12034
-                        ],
-                        lineTension: 0,
-                        backgroundColor: 'transparent',
-                        borderColor: '#007bff',
-                        borderWidth: 4,
-                        pointBackgroundColor: '#007bff'
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: false
-                            }
-                        }]
-                    },
-                    legend: {
-                        display: false
-                    }
-                }
-            })
-        })()
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     </script>
 
     @yield('scripts')
