@@ -19,13 +19,6 @@ class CreateRolesTable extends Migration
       $table->string('name');
       $table->softDeletes();
     });
-
-    DB::table('roles')->insert([
-      ['name' => 'Anggota Biasa'],
-      ['name' => 'Bendahara'],
-      ['name' => 'SDM'],
-      ['name' => 'Kearsipan']
-    ]);
   }
 
   /**
