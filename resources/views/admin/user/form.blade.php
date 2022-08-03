@@ -17,7 +17,7 @@
     <h2 class="h3 mt-5">Peran Sistem</h2>
     @if ($user->roles->isNotEmpty())
         @foreach ($user->roles as $role)
-            <form action="{{ route('users.roleDestroy') }}" method="POST" class="d-inline p-1">
+            <form action="{{ route('system.users.roleDestroy') }}" method="POST" class="d-inline p-1">
               @csrf
 
               <input type="hidden" name="user_id" value="{{ $user->id }}">
@@ -33,7 +33,7 @@
         <p class="text-danger">Peran pengguna belum diatur.</p>
     @endif
 
-    <form action="{{ route('users.roleStore') }}" method="POST" class="row row-cols-lg-auto g-3 align-items-center mt-3">
+    <form action="{{ route('system.users.roleStore') }}" method="POST" class="row row-cols-lg-auto g-3 align-items-center mt-3">
         @csrf
         <input type="hidden" name="user_id" value="{{ $user->id }}">
         <div class="col-12">

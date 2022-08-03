@@ -11,7 +11,8 @@
 
 {{ bcrypt('12345678') }}
 
-<form action="{{ $user->exists ? route('users.update', $user) : route('users.store') }}" enctype="multipart/form-data" method="POST">
+<form action="{{ $user->exists ? route('system.users.update', $user) : route('system.users.store') }}"
+    enctype="multipart/form-data" method="POST">
     @csrf
     @method('PUT')
 

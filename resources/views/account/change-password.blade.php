@@ -2,7 +2,7 @@
 @section('title', 'Atur Password')
 
 @section('main')
-    <form action="{{ route('profile.setPassword.submit') }}" method="POST" autocomplete="off">
+    <form action="{{ route('account.change-password') }}" method="POST" autocomplete="off">
         @csrf
 
         @if ($user->password)

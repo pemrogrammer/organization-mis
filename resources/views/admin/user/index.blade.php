@@ -78,7 +78,7 @@
                             </div>
                         </td>
                         <td>
-                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-link"><i
+                            <a href="{{ route('system.users.edit', $user->id) }}" class="btn btn-sm btn-link"><i
                                     class="bi bi-eye-fill align-bottom"></i></a>
                         </td>
                     </tr>
@@ -94,7 +94,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('users.store') }}" id="userForm" method="POST" autocomplete="off">
+                        <form action="{{ route('system.users.store') }}" id="userForm" method="POST" autocomplete="off">
                             @csrf
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="name" name="name" placeholder="Nama"

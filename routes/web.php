@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgotPassword;
 use App\Http\Controllers\InitializeAppController;
@@ -66,12 +67,24 @@ Route::middleware('auth')->group(function () {
   //   ->group(function () {
   //   });
 
-  Route::resource('users', UserController::class);
-  Route::post('users/roles/store', [UserController::class, 'roleStore'])->name('users.roleStore');
-  Route::post('users/roles', [UserController::class, 'roleDestroy'])->name('users.roleDestroy');
+    Route::prefix('account')
+    ->name('account.')
+    ->group(function () {
+      Route::get('change-password', [ChangePasswordController::class, 'index'])->name('change-password');
+      Route::post('change-password', [ChangePasswordController::class, 'update']);
+    });
 
 
-  Route::get('profile/set-password', [ProfileController::class, 'setPasswordForm'])->name('profile.setPassword');
-  Route::post('profile/set-password', [ProfileController::class, 'setPassword'])->name('profile.setPassword.submit');
+
+
+    
+    // NOT FINISHED BUT I COMMITTED ANYWAY
+    Route::prefix('system')
+    ->name('system.')
+    ->group(function () {
+      Route::resource('users', UserController::class);
+      Route::post('users/roles/store', [UserController::class, 'roleStore'])->name('users.roleStore');
+      Route::post('users/roles', [UserController::class, 'roleDestroy'])->name('users.roleDestroy');
+    });
 
 });
