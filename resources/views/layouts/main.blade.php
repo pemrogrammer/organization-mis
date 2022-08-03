@@ -221,6 +221,11 @@
         <div class="row">
             @include('layouts.components.sidebar')
 
+            {{-- <div class="p-3 border-top position-absolute" style="bottom: 0px; left: 0px; z-index: 100;">
+                <p class="m-0">Klub Pemrograman TI POLNES</p>
+                <p class="m-0">Copyright © 2022</p>
+            </div> --}}
+
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pb-5">
                 @if (Session::has('alerts'))
                     @foreach (Session::get('alerts') as $alert)
