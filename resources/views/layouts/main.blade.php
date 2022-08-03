@@ -7,7 +7,12 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.101.0">
-    <title>{{ env('APP_NAME') }}</title>
+    <title>
+        {{ config('app.name') }}
+        @hasSection('title')
+            - @yield('title')
+        @endif
+    </title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
@@ -192,7 +197,7 @@
 <body>
 
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="/">{{ env('APP_NAME') }}</a>
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="/">{{ config('app.name') }}</a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -217,6 +222,30 @@
             @include('layouts.components.sidebar')
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pb-5">
+                @if (Session::has('alerts'))
+                    @foreach (Session::get('alerts') as $alert)
+                        @include('layouts.components.alert', [
+                            'class' => $alert['class'] . ' mt-3 mb-0',
+                            'message' => $alert['message'],
+                        ])
+                    @endforeach
+                @endif
+
+                @if ($errors->any())
+                    @foreach ($errors->all() as $message)
+                        @include('layouts.components.alert', [
+                            'class' => 'danger mt-3 mb-0',
+                            'message' => $message,
+                        ])
+                    @endforeach
+                @endif
+
+
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">@yield('title')</h1>
+                </div>
+
                 @yield('main')
             </main>
         </div>
