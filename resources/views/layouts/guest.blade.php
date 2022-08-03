@@ -74,7 +74,8 @@
         @if ($errors->any())
             @foreach ($errors->all() as $message)
                 @include('layouts.components.alert', [
-                    'alert' => ['class' => 'danger', 'message' => $message],
+                    'class' => 'danger',
+                    'message' => $message,
                 ])
             @endforeach
         @endif
