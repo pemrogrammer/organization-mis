@@ -46,8 +46,15 @@ class LoginController extends Controller
 
     if ($isUserFound) {
       Auth::login($user);
-      
-      return redirect()->intended('/');
+
+      return $user->password
+        ? redirect()->intended('/')
+        : redirect()->intended('/')->with('alerts', [
+          [
+            'class' => 'warning',
+            'message' => 'Password belum diator, silahkan <a href="' . route('profile.setPassword') . '">atur password</a>.'
+          ]
+        ]);
     }
 
     return redirect()->route('login')->withErrors([

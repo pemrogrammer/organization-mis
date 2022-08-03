@@ -5,8 +5,10 @@ use App\Http\Controllers\ForgotPassword;
 use App\Http\Controllers\InitializeAppController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,5 +69,9 @@ Route::middleware('auth')->group(function () {
   Route::resource('users', UserController::class);
   Route::post('users/roles/store', [UserController::class, 'roleStore'])->name('users.roleStore');
   Route::post('users/roles', [UserController::class, 'roleDestroy'])->name('users.roleDestroy');
+
+
+  Route::get('profile/set-password', [ProfileController::class, 'setPasswordForm'])->name('profile.setPassword');
+  Route::post('profile/set-password', [ProfileController::class, 'setPassword'])->name('profile.setPassword.submit');
 
 });
