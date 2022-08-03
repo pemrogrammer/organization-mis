@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ForgotPassword;
 use App\Http\Controllers\InitializeAppController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
@@ -44,6 +45,11 @@ Route::middleware('guest')->group(function () {
       Route::get('oauth/google', 'googleOauth')->name('oauth.google');
       Route::get('oauth/google/redirect', 'handleGoogleOauth')->name('oauth.google.callback');
     });
+
+  Route::get('forgot-password', [ForgotPassword::class, 'index'])->name('forgot-password');
+  Route::post('forgot-password', [ForgotPassword::class, 'send'])->name('forgot-password.send');
+  Route::get('reset-password/{token}', [ForgotPassword::class, 'resetPasswordForm'])->name('password.reset');
+  Route::post('reset-password', [ForgotPassword::class, 'resetPassword'])->name('password.update');
 });
 
 Route::middleware('auth')->group(function () {
