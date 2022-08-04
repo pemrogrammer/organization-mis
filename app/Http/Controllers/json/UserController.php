@@ -29,7 +29,7 @@ class UserController extends Controller
 
 
     $users = User::where('name', 'LIKE', '%' . $request->q . '%')
-      ->orwhere('id_number', 'LIKE', '%' . $request->q . '%')->get();
+      ->orwhere('id_number', 'LIKE', '%' . $request->q . '%')->orderBy('name')->get();
 
     return $this->formatJsonResponse('success', null, $users);
   }
