@@ -17,7 +17,7 @@ class UserController extends Controller
   public function index()
   {
     $users = User::paginate(25);
-    return view('admin.user.index', compact('users'));
+    return view('system.users.index', compact('users'));
   }
 
   /**
@@ -28,7 +28,7 @@ class UserController extends Controller
   public function create()
   {
     $user = new User;
-    return view('admin.user.form', ['user' => $user]);
+    return view('system.users.form', ['user' => $user]);
   }
 
   /**
@@ -47,7 +47,12 @@ class UserController extends Controller
     
     User::create($validatedInput);
 
-    return redirect()->route('users.index');
+    return redirect()->route('system.users.index')->with('alerts', [
+      [
+        'class' => 'success',
+        'message' => 'Berhasil membuat pengguna ' . $validatedInput['name'] . '.'
+      ]
+    ]);
   }
 
   public function roleStore(Request $request)
@@ -59,7 +64,7 @@ class UserController extends Controller
 
     UserRole::firstOrCreate($validatedInput);
     
-    return redirect(route('users.edit', $request->user_id))->with('message', [
+    return redirect(route('system.users.edit', $request->user_id))->with('message', [
       'class' => 'success',
       'text' => 'Berhasil menambahkan peran sistem'
     ]);
@@ -74,7 +79,7 @@ class UserController extends Controller
 
     UserRole::where('user_id', $validatedInput['user_id'])->where('role_id', $validatedInput['role_id'])->delete();
 
-    return redirect(route('users.edit', $request->user_id))->with('message', [
+    return redirect(route('system.users.edit', $request->user_id))->with('message', [
       'class' => 'warning',
       'text' => 'Berhasil menghapus peran sistem'
     ]);
@@ -102,7 +107,7 @@ class UserController extends Controller
   public function edit(User $user)
   {
     $roles = Role::all();
-    return view('admin.user.form', compact('user', 'roles'));
+    return view('system.users.form', compact('user', 'roles'));
   }
 
   /**
@@ -114,7 +119,7 @@ class UserController extends Controller
    */
   public function update(Request $request, User $user)
   {
-    return redirect(route('users.edit', $user))->with('message', [
+    return redirect(route('system.users.edit', $user))->with('message', [
       'class' => 'success',
       'text' => 'Berhasil menyimpan perubahan'
     ]);

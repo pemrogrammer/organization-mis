@@ -4,12 +4,12 @@ use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgotPassword;
 use App\Http\Controllers\InitializeAppController;
+use App\Http\Controllers\json\UserController as JsonUserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\HttpKernel\Profiler\Profile;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ Route::middleware('auth')->group(function () {
   //   ->group(function () {
   //   });
 
-    Route::prefix('account')
+  Route::prefix('account')
     ->name('account.')
     ->group(function () {
       Route::get('change-password', [ChangePasswordController::class, 'index'])->name('change-password');
@@ -75,16 +75,23 @@ Route::middleware('auth')->group(function () {
     });
 
 
+  Route::resource('presences', PresenceController::class);
+
+  Route::prefix('json')
+    ->name('json.')
+    ->group(function () {
+      Route::get('users/get', [JsonUserController::class, 'getUsers'])->name('users.get');
+    });
 
 
-    
-    // NOT FINISHED BUT I COMMITTED ANYWAY
-    Route::prefix('system')
+
+
+  // NOT FINISHED BUT I COMMITTED ANYWAY
+  Route::prefix('system')
     ->name('system.')
     ->group(function () {
       Route::resource('users', UserController::class);
       Route::post('users/roles/store', [UserController::class, 'roleStore'])->name('users.roleStore');
       Route::post('users/roles', [UserController::class, 'roleDestroy'])->name('users.roleDestroy');
     });
-
 });
