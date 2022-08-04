@@ -33,7 +33,7 @@ class MenuSeeder extends Seeder
         "bi" => "house"
       ], [
         "id" => 2,
-        "name" => "Kehadiran",
+        "name" => "Presensi",
         "path" => "presences",
         "bi" => "calendar-event"
       ], [
