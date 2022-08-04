@@ -20,13 +20,98 @@ Manage:
 
 ## Deployment
 
-1. Clone this repository.
-2. Create `.env` file based on `.env.example` file. (create a new database if it's nessesary)
-3. run `composer install` on terminal.
-4. run `php artisan key:generate` on terminal.
-5. run `php artisan migrate` on terminal.
-6. run `php artisan serve` on terminal.
-7. open browser then go to `[domain]/initialize-app` (example: `http://localhost:8000/initialize-app`) for initializing this app.
+### 1. Clone this repository
+
+### 2. Create `.env` fle
+
+You have to create .end file based on `.env.example` file. these are some variables that need to be set.
+
+database connection is required, please filling up all variables below.
+
+```env
+...
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
+
+...
+```
+
+This apps is capale for sending emails but you have to setup the connection to the email server first. please filling up these variables.
+
+```env
+MAIL_MAILER=
+MAIL_HOST=
+MAIL_PORT=
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_ENCRYPTION=
+MAIL_FROM_ADDRESS=
+```
+
+This apps is also capable using [Google OAuth](https://developers.google.com/identity/protocols/oauth2). first, you need create a project on [Google Cloud](https://console.cloud.google.com/projectcreate). then, [create a credentials for OAuth](https://console.developers.google.com/apis/credentials) for filling these variables.
+
+```env
+...
+
+GOOGLE_OAUTH_CLIENT_ID=
+GOOGLE_OAUTH_CLIENT_SECRET=
+
+...
+```
+
+### 3. run `composer install` on terminal
+
+```bash
+composer install
+```
+
+### 4. Generate laravel key
+
+```bash
+php artisan key:generate
+```
+
+### 5. Migrate Database
+
+```bash
+php artisan migrate
+```
+
+<small>Reference: [https://laravel.com/docs/8.x/migrations#introduction](https://laravel.com/docs/8.x/migrations#introduction)</small>
+
+
+### 6. Seed Database
+
+```bash
+php artisan db:seed
+```
+
+<small>Reference: [https://laravel.com/docs/8.x/seeding#introduction](https://laravel.com/docs/8.x/seeding#introduction)</small>
+
+### 7. Serve the web apps
+
+for quickstart you can type command below:
+
+```bash
+php artisan serve
+```
+
+### 8. Initialize the apps
+
+This app need a few setup to make it works. To setting up, first open your browser, then go to `[YOUR DOMAIN]/initialize-app`
+
+If you serve the app by `'php artisan serve'` command, by default the initialization page is located at [http://localhost:8000/initialize-app](http://localhost:8000/initialize-app).
+
+### 9. Done
+
+Congratulations‼, this App is ready on ```[YOUR DOMAIN]```
+
+🎉🎉🎉
 
 ## Contributing
 
