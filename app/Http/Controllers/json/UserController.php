@@ -31,6 +31,6 @@ class UserController extends Controller
     $users = User::where('name', 'LIKE', '%' . $request->q . '%')
       ->orwhere('id_number', 'LIKE', '%' . $request->q . '%')->get();
 
-    dd($users);
+    return $this->formatJsonResponse('success', null, $users);
   }
 }
