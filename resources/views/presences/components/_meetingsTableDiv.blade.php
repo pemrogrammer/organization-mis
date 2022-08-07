@@ -67,3 +67,7 @@
     </table>
 </div>
 {!! $mettings->links() !!}
+
+@push('scripts')
+
+@endpush

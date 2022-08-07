@@ -58,13 +58,17 @@
                             <i class="bi bi-qr-code fs-4"></i>
                         </button>
 
-                        <button class="btn btn-link" onclick="renderAttendacesTable({{ $meeting->id }})"
-                            data-bs-toggle="tooltip" data-bs-title="Lihat Daftar Hadir">
-                            <i class="bi bi-people-fill fs-4"></i>
-                        </button>
+                        @include('presences.components._showMeetingAttendancesModalButton', compact('meeting'))
                     </div>
                 @endif
             </div>
         </div>
     @endforeach
 </div>
+
+@push('scriptsx')
+<script>
+  // this is from upcoming div -->
+
+</script>
+@endpush

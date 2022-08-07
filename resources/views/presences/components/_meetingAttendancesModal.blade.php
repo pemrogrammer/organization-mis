@@ -47,3 +47,55 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <script type="text/javascript">
+        const meetings = [].concat({{ Js::from($upcomingMeetings->toJson()) }}, {{ Js::from($allMeetings->items()) }});
+
+        function getMeeting(meetingId) {
+            return meetings.find(meeting => meeting.id == meetingId)
+        }
+
+        function renderAttendacesTable(meetingId) {
+            const tableEl = $('#attendancesTable');
+            const meeting = getMeeting(meetingId);
+            const formEl = $('#attendancesForm');
+            formEl.find('#meeting_id').val(meetingId);
+
+            if (meeting.is_at_toleranced) {
+                formEl.children().prop("disabled", false);
+                formEl.children().removeClass("disabled");
+                formEl.find('button').removeClass("disabled");
+                formEl.removeClass("d-none");
+            } else {
+                formEl.children().prop("disabled", true);
+                formEl.children().addClass("disabled");
+                formEl.find('button').addClass("disabled");
+                formEl.addClass("d-none");
+            }
+
+
+            let tbody = `<tr>
+        <td colspan="4" class="text-center">Belum ada peserta</td>
+        </tr>`;
+
+
+            if (meeting?.attendances.length > 0) {
+                tbody = meeting?.attendances.map(attendance => {
+                    return `<tr>
+                <td>${attendance.user.id_number || ''}</td>
+                <td>${attendance.user.name}</td>
+                <td>${attendance.attended_at ? attendance.attended_at_from_meeting_at_diff_for_humans : '-'}</td>
+                <td></td>
+              </tr>`;
+                });
+            }
+
+
+
+            tableEl.children('tbody').html(tbody);
+
+            $('#meetingAttendancesModal').modal('show');
+        }
+    </script>
+@endpush

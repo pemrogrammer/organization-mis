@@ -191,8 +191,8 @@
     </style>
 
 
-    @yield('styles')
-
+    @push('styles')
+    @method('styles')
 </head>
 
 <body>
@@ -286,6 +286,7 @@
     </script>
 
     @yield('scripts')
+    @stack('scripts')
 </body>
 
 </html>
