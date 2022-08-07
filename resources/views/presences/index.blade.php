@@ -27,7 +27,7 @@
     </div>
 
 
-    <div class="d-flex align-items-center pt-3 pb-2 mb-3">
+    <div class="d-flex align-items-center pt-3 pb-2 mb-3 mt-5">
         <h3 class="h4">Semua Agenda</h3>
         <button class="btn btn-success mx-4" data-bs-toggle="modal" data-bs-target="#meetingModal">Buat Agenda</button>
     </div>
@@ -86,8 +86,12 @@
                     <button type="button" class="btn-close" onClick="hideScannerModal()" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    @include('layouts.components.alert', [
+                        'class' => 'warning',
+                        'message' => 'Mohon izinkan akses kamera',
+                    ])
                     <div class="d-flex justify-content-center">
-                        <div id="scannerPreviewContainer" class="ratio ratio-1x1 overflow-hidden mx-5 my-4">
+                        <div id="scannerPreviewContainer" class="ratio ratio-1x1 overflow-hidden mx-5">
                             <div>
                                 <div class="d-flex justify-content-center" style="width: 100%; height: 100%;">
                                     <i class="bi bi-camera-video-off" style="font-size: 6em"></i>
@@ -97,16 +101,13 @@
                         </div>
                     </div>
 
-                    @include('layouts.components.alert', [
-                        'class' => 'warning',
-                        'message' => 'Mohon izinkan akses kamera',
-                    ])
 
+                </div>
+                <div class="modal-footer justify-content-center">
                     <button class="btn btn-link" onclick="setScannerCamera()" data-bs-toggle="tooltip"
-                        data-bs-title="Lihat Daftar Hadir">
-                        <i class="bi bi-phone-flip fs-4"></i>
+                        data-bs-title="Ganti Camera">
+                        <i class="bi bi-phone-flip fs-1"></i>
                     </button>
-
                 </div>
             </div>
         </div>
@@ -119,12 +120,6 @@
 @endsection
 
 
-{{-- @section('btn-toolbar')
-    <button class="btn btn-light mx-3" data-bs-toggle="tooltip" data-bs-title="Pindai QR Presensi">
-        <i class="bi bi-qr-code-scan" style="font-size: 2rem"></i>
-    </button>
-@endsection --}}
-
 @section('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
         integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw=="
@@ -132,15 +127,46 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ URL::asset('assets/js/instascan.min.js') }}"></script>
     @include('presences.components._scripts')
+    <script src="{{ URL::asset('assets/js/instascan.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
+        integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script type="text/javascript">
         let scanner = null;
         let activeCameraId = null;
         let camera_devices = null;
-        const qrScannerModal = $('#qrScannerModal');
+        let qrScannerModal = null;
+        let qrScannerModalAlert = null;
 
+        $(function() {
+            qrScannerModal = $('#qrScannerModal');
+            qrScannerModalAlert = qrScannerModal.find('[role="alert"]');
+        });
+
+        function setQrScannerModalAlert(message, clss) {
+            qrScannerModalAlert.html(message);
+            qrScannerModalAlert.removeClass();
+
+            qrScannerModalAlert.addClass('alert alert-' + clss);
+
+            if (clss === 'success') {
+
+                qrScannerModalAlert.effect("shake", {
+                    direction: "left",
+                    times: 1,
+                    distance: 10
+                });
+            } else {
+                qrScannerModalAlert.effect("shake", {
+                    direction: "up",
+                    times: 4,
+                    distance: 10
+                });
+            }
+
+        }
 
 
         function showPassKeyFormModal() {
@@ -154,23 +180,34 @@
 
         function hideScannerModal() {
             qrScannerModal.modal('hide');
-
             scanner.stop();
         }
 
+        function isMirrorCamera(cameraName) {
+          const lowerCameraName = cameraName.toLowerCase();
+          const isCameraFront = lowerCameraName.includes("front");
+          const isWebCam = lowerCameraName.includes("webcam") || lowerCameraName.includes('web cam') || lowerCameraName.includes('web-cam');
+
+          return isCameraFront || isWebCam;
+        }
+
         function setScannerCamera() {
-            return scanner.start(camera_devices[getCameraId()]);
+            scanner.stop();
+            const cameraActive = camera_devices[getCameraId()];
+            scanner.mirror = isMirrorCamera(cameraActive.name);
+            return scanner.start(cameraActive);
         }
 
         function getCameraId() {
-            if (!activeCameraId) {
-                activeCameraId = camera_devices.length - 1;
-            } else if (activeCameraId == (camera_devices.length - 1)) {
+            if (activeCameraId === null) {
+                activeCameraId = parseInt(localStorage.getItem("lastCameraId")) || camera_devices.length - 1;
+            } else if (activeCameraId == camera_devices.length - 1) {
                 activeCameraId = 0;
             } else {
-                activeCameraId = activeCameraId + 1;
+                activeCameraId++;
             }
 
+            localStorage.setItem("lastCameraId", activeCameraId);
             return activeCameraId;
         }
 
@@ -182,7 +219,6 @@
             } catch (_) {
                 return false;
             }
-
 
             return url.protocol + '//' + url.host === '{{ url('/') }}';
         }
@@ -197,7 +233,7 @@
                     if (isContentValid(content)) {
                         window.location.replace(content);
                     } else {
-                      qrScannerModal.find('.modal-body .alert').html('Kode QR tidak valid, silahkan coba lagi.');
+                        setQrScannerModalAlert('Kode QR tidak valid, silahkan coba lagi.', 'danger');
                     }
                 });
             }
@@ -211,16 +247,16 @@
                         camera_devices = cameras;
                         setScannerCamera();
                     }
-                    
-                    qrScannerModal.find('.modal-body .alert').html('silahkan arahkan kamera pada kode QR');
+
+                    setQrScannerModalAlert('Silahkan arahkan kamera pada kode QR', 'success');
                     container.find('i').addClass('d-none');
                     video.removeClass('d-none');
 
                 } else {
-                    qrScannerModal.find('.modal-body .alert').html('Tidak dapat menemukan camera');
+                    setQrScannerModalAlert('Tidak dapat menemukan camera', 'danger');
                 }
             }).catch(e => {
-                qrScannerModal.find('.modal-body .alert').html(e.message);
+                setQrScannerModalAlert('Error: ' + e.message, 'danger');
             });
         }
     </script>

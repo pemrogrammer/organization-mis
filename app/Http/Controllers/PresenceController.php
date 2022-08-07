@@ -27,7 +27,7 @@ class PresenceController extends Controller
       });
 
     $upcomingMeetings = (clone $meetingQuery)
-      ->where('at', '>', now()->subHours(6))
+      ->where('at', '>', now()->subMinutes(15))
       ->orderBy('at')
       ->take(3)
       ->get();
