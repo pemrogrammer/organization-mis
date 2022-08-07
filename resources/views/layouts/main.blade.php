@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
@@ -108,9 +108,10 @@
         .sidebar {
             position: fixed;
             top: 0;
-            /* rtl:raw:
-  right: 0;
-  */
+            /*
+            rtl:raw:
+            right: 0;
+            */
             bottom: 0;
             /* rtl:remove */
             left: 0;
@@ -227,6 +228,8 @@
             </div> --}}
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pb-5">
+              <div class="m-md-5">
+
                 @if (Session::has('alerts'))
                     @foreach (Session::get('alerts') as $alert)
                         @include('layouts.components.alert', [
@@ -246,20 +249,37 @@
                 @endif
 
 
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">@yield('title')</h1>
+
+                    @hasSection('btn-toolbar')
+                        <div class="btn-toolbar mb-2 mb-md-0">
+                            @yield('btn-toolbar')
+                        </div>
+                    @endif
                 </div>
 
-                @yield('main')
+                  @yield('main')
+              </div>
+
             </main>
         </div>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
     </script>
 
+    {{-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
+        integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous">
+    </script> --}}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/js/bootstrap-select.min.js"></script>
     <script>
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))

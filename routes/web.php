@@ -75,6 +75,9 @@ Route::middleware('auth')->group(function () {
     });
 
 
+  Route::get('attendance/submit-pass-key', [PresenceController::class, 'updateAttendance'])->name('presences.update-attendance');
+  Route::get('presences/{meeting_id}/show-qr', [PresenceController::class, 'showQr'])->name('presences.show-qr');
+  Route::post('presences/store-attendance', [PresenceController::class, 'storeAttendances'])->name('presences.store-attendances');
   Route::resource('presences', PresenceController::class);
 
   Route::prefix('json')
