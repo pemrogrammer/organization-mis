@@ -9,6 +9,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,6 +73,16 @@ Route::middleware('auth')->group(function () {
     ->group(function () {
       Route::get('change-password', [ChangePasswordController::class, 'index'])->name('change-password');
       Route::post('change-password', [ChangePasswordController::class, 'update']);
+      Route::get('profile', [ProfileController::class, 'index'])->name('profile');
+      Route::post('set-education', [ProfileController::class, 'set_education'])->name('set-education');
+      Route::post('delete-education', [ProfileController::class, 'delete_education'])->name('delete-education');
+      Route::post('update-education', [ProfileController::class, 'update_education'])->name('update-education');
+      Route::post('set-achievements', [ProfileController::class, 'set_achievements'])->name('set-achievements');
+      Route::post('delete-achievements', [ProfileController::class, 'delete_achievements'])->name('delete-achievements');
+      Route::post('update-achievements', [ProfileController::class, 'update_achievements'])->name('update-achievements');
+      Route::post('set-experience', [ProfileController::class, 'set_experience'])->name('set-experience');
+      Route::post('delete-experience', [ProfileController::class, 'delete_experience'])->name('delete-experience');
+      Route::post('update-experience', [ProfileController::class, 'update_experience'])->name('update-experience');
     });
 
 
@@ -94,7 +105,9 @@ Route::middleware('auth')->group(function () {
     ->name('system.')
     ->group(function () {
       Route::resource('users', UserController::class);
+
       Route::post('users/roles/store', [UserController::class, 'roleStore'])->name('users.roleStore');
       Route::post('users/roles', [UserController::class, 'roleDestroy'])->name('users.roleDestroy');
     });
 });
+

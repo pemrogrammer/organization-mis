@@ -61,8 +61,20 @@ class User extends Authenticatable implements CanResetPassword
       return $this->hasManyThrough(Menu::class, UserMenu::class, 'user_id', 'id', 'id', 'menu_id');
     }
 
+    public function educations(){
+      return $this->hasManyThrough(education::class, user_education::class, 'user_id', 'id', 'id', 'education_id');
+    }
+
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function achievements(){
+        return $this->hasMany(user_achievements::class);
+    }
+
+    public function experience(){
+        return $this->hasMany(user_experience::class);
     }
 }

@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\UserRole;
 use Illuminate\Http\Request;
 
+use File;
+
 class UserController extends Controller
 {
   /**
@@ -95,7 +97,7 @@ class UserController extends Controller
    */
   public function show(User $user)
   {
-    //
+
   }
 
   /**
@@ -107,7 +109,8 @@ class UserController extends Controller
   public function edit(User $user)
   {
     $roles = Role::all();
-    return view('system.users.form', compact('user', 'roles'));
+    $profile = 0;
+    return view('system.users.form', compact('user', 'roles', 'profile'));
   }
 
   /**
@@ -119,10 +122,50 @@ class UserController extends Controller
    */
   public function update(Request $request, User $user)
   {
-    return redirect(route('system.users.edit', $user))->with('message', [
-      'class' => 'success',
-      'text' => 'Berhasil menyimpan perubahan'
-    ]);
+    $ubah = User::find($request->user_id);
+    $ubah->is_male = ($request->isMale == 'on' ? 1 : 0);
+    $ubah->religion = $request->religion;
+    $ubah->birth_date = $request->birthDate;
+    $ubah->birth_city = $request->birthCity;
+    $ubah->hobby = $request->hobi;
+    $ubah->motto = $request->moto;
+    $ubah->bio = $request->bio;
+    $ubah->id_number = $request->id_number;
+    if ($request->foto) {
+      $foto = ['png', 'jpeg', 'jpg'];
+      if (in_array($request->file('foto')->extension(), $foto)) {
+        if (File::exists('assets/foto/'.$ubah->img_path)) {
+          File::delete('assets/foto/'.$ubah->img_path);
+          $name = time().'.'.$request->file('foto')->extension();
+          $request->file('foto')->move('assets/foto', $name);
+          $ubah->img_path = $name;
+        } else {
+          $name = time().'.'.$request->file('foto')->extension();
+          $request->file('foto')->move('assets/foto', $name);
+          $ubah->img_path = $name;
+        }
+      } else {
+        return redirect(route('account.profile', $user))->with('message', [
+          'class' => 'danger',
+          'text' => 'File hanya boleh ber-extensi : .png, .jpg, .jpeg'
+        ]);
+      }
+    }
+    $ubah->update();
+
+    if ($request->profile == 0) {
+      return redirect(route('system.users.edit', $user))->with('message', [
+        'class' => 'success',
+        'text' => 'Berhasil menyimpan perubahan'
+      ]);
+    } else {
+      return redirect(route('account.profile'))->with('message', [
+        'class' => 'success',
+        'text' => 'Berhasil menyimpan perubahan'
+      ]);
+    }
+
+    
   }
 
   /**

@@ -19,6 +19,8 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -284,6 +286,37 @@
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        async function select2Init() {
+          const jsonURL =
+            "https://raw.githubusercontent.com/yusufsyaifudin/wilayah-indonesia/master/data/list_of_area/regencies.json";
+
+          const res = await fetch(jsonURL);
+          const cities = await res.json();
+
+          const select2Data = cities.map(city => {
+            return {
+              id: city.id,
+              text: city.name
+            }
+          })
+
+          $("#addressCity1").select2({
+            data: select2Data
+          });
+
+          $("#addressCity2").select2({
+            data: select2Data
+          });
+        }
+
+        select2Init();
+    </script>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.2.1/classic/ckeditor.js"></script>
 
     @yield('scripts')
     @stack('scripts')
